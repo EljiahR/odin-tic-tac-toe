@@ -56,8 +56,10 @@ const gameBoard = (()=>{
 const displayController = (()=>{
     let winFlag = false;
     let XO = 'X'
+    let turnCounter = 0;
     const playXO = function(x, y){
         if(gameBoard.getXO(x,y) == '' && !winFlag){
+            turnCounter += 1;
             gameBoard.setXOAt(XO,x,y)
             updateScreen(x, y);
             checkforWin();
@@ -70,6 +72,7 @@ const displayController = (()=>{
     }
     const resetGame = function(){
         XO = 'X'
+        turnCounter = 0;
         winFlag = false
         for(let i = 0; i < 3; i++){
             for(let j = 0; j < 3; j++){
@@ -82,8 +85,12 @@ const displayController = (()=>{
         }
         document.querySelector('.results').innerText = '';
     }
-    const displayResults = function(){
-        document.querySelector('.results').innerText = `The winner is: ${XO}!`
+    const displayResults = function(tie){
+        if(tie){
+            document.querySelector('.results').innerText = 'TIE!'
+        }else{
+            document.querySelector('.results').innerText = `The winner is: ${document.querySelector(`#player${XO}`).value}!`
+        }
     }
     const checkforWin=function(){
         let diagnol = 0;
@@ -104,6 +111,9 @@ const displayController = (()=>{
         }
         if(gameBoard.getXO(0,2) == XO && gameBoard.getXO(1,1) == XO && gameBoard.getXO(2,0) == XO){
             console.log(`${XO} wins`)
+        }
+        if(turnCounter == 9){
+            displayResults(true);
         }
     }
 
