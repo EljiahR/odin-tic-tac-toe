@@ -59,19 +59,14 @@ const displayController = (()=>{
     const playXO = function(x, y){
         if(gameBoard.getXO(x,y) == ''){
             gameBoard.setXOAt(XO,x,y)
+            updateScreen(x, y);
+            checkforWin();
             if(XO === 'X'){XO = 'O'}else{XO = 'X'}
-            updateScreen();
         }
     }
-    const updateScreen = function(){
-        for(let i = 0; i < 3; i++){
-            for(let j = 0; j < 3; j++){
-                document.querySelector(`#c${i}${j}`).innerText = gameBoard.getXO(i, j)
-                if(gameBoard.getXO(i,j) != ''){
-                    document.querySelector(`#c${i}${j}`).classList.add(`${gameBoard.getXO(i, j)}`)
-                }
-            }
-        }
+    const updateScreen = function(x, y){
+        document.querySelector(`#c${x}${y}`).innerText = gameBoard.getXO(x,y)
+        document.querySelector(`#c${x}${y}`).classList.add(XO)
     }
     const resetGame = function(){
         XO = 'X'
@@ -85,6 +80,26 @@ const displayController = (()=>{
             }
         }
     }
+    const checkforWin=function(){
+        let diagnol = 0;
+        for(let i = 0; i < 3; i++){
+            if(gameBoard.getXO(i,0) == XO && gameBoard.getXO(i,1) == XO && gameBoard.getXO(i,2) == XO){
+                console.log(gameBoard.getXO(i,0), gameBoard.getXO(i,1), gameBoard.getXO(i,2))
+                console.log(`${XO} wins`)
+            }else if(gameBoard.getXO(0,i) == XO && gameBoard.getXO(1,i) == XO && gameBoard.getXO(2,i) == XO){
+                console.log(`${XO} wins`)
+            }else if(gameBoard.getXO(i,i) == XO){
+                diagnol += 1;
+                if(diagnol == 3){
+                    console.log(`${XO} wins`)
+                }
+            }
+        }
+        if(gameBoard.getXO(0,2) == XO && gameBoard.getXO(1,1) == XO && gameBoard.getXO(2,0) == XO){
+            console.log(`${XO} wins`)
+        }
+    }
+    
 
     return {playXO, resetGame}
 })();
