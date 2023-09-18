@@ -54,10 +54,10 @@ const gameBoard = (()=>{
 })();
 
 const displayController = (()=>{
-    
+    let winFlag = false;
     let XO = 'X'
     const playXO = function(x, y){
-        if(gameBoard.getXO(x,y) == ''){
+        if(gameBoard.getXO(x,y) == '' && !winFlag){
             gameBoard.setXOAt(XO,x,y)
             updateScreen(x, y);
             checkforWin();
@@ -70,6 +70,7 @@ const displayController = (()=>{
     }
     const resetGame = function(){
         XO = 'X'
+        winFlag = false
         for(let i = 0; i < 3; i++){
             for(let j = 0; j < 3; j++){
                 document.querySelector(`#c${i}${j}`).innerText = ''
@@ -79,19 +80,25 @@ const displayController = (()=>{
                 gameBoard.setXOAt('',i, j)
             }
         }
+        document.querySelector('.results').innerText = '';
+    }
+    const displayResults = function(){
+        document.querySelector('.results').innerText = `The winner is: ${XO}!`
     }
     const checkforWin=function(){
         let diagnol = 0;
         for(let i = 0; i < 3; i++){
             if(gameBoard.getXO(i,0) == XO && gameBoard.getXO(i,1) == XO && gameBoard.getXO(i,2) == XO){
-                console.log(gameBoard.getXO(i,0), gameBoard.getXO(i,1), gameBoard.getXO(i,2))
-                console.log(`${XO} wins`)
+                winFlag = true;
+                displayResults();
             }else if(gameBoard.getXO(0,i) == XO && gameBoard.getXO(1,i) == XO && gameBoard.getXO(2,i) == XO){
-                console.log(`${XO} wins`)
+                winFlag = true;
+                displayResults();
             }else if(gameBoard.getXO(i,i) == XO){
                 diagnol += 1;
                 if(diagnol == 3){
-                    console.log(`${XO} wins`)
+                    winFlag = true;
+                    displayResults();
                 }
             }
         }
@@ -99,7 +106,7 @@ const displayController = (()=>{
             console.log(`${XO} wins`)
         }
     }
-    
+
 
     return {playXO, resetGame}
 })();

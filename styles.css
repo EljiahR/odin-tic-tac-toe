@@ -4,6 +4,14 @@
     padding: 0;
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif ;
 }
+.results{
+    height: 10px;
+    width: 100%;
+    font-size: 60px;
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
 
 .container{
     height:100%;
