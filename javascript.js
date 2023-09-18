@@ -34,6 +34,10 @@ document.querySelector('#c22').addEventListener('click',(e)=>{
     e.stopPropagation
     displayController.playXO(e.target.id.charAt(1),e.target.id.charAt(2))
 })
+document.querySelector('#reset-btn').addEventListener('click',(e)=>{
+    e.stopPropagation
+    displayController.resetGame();
+})
 
 const gameBoard = (()=>{
     const board = [['','',''],
@@ -53,19 +57,36 @@ const displayController = (()=>{
     
     let XO = 'X'
     const playXO = function(x, y){
-    
-        gameBoard.setXOAt(XO,x,y)
-        if(XO === 'X'){XO = 'O'}else{XO = 'X'}
-        updateScreen();
+        if(gameBoard.getXO(x,y) == ''){
+            gameBoard.setXOAt(XO,x,y)
+            if(XO === 'X'){XO = 'O'}else{XO = 'X'}
+            updateScreen();
+        }
     }
     const updateScreen = function(){
         for(let i = 0; i < 3; i++){
             for(let j = 0; j < 3; j++){
                 document.querySelector(`#c${i}${j}`).innerText = gameBoard.getXO(i, j)
+                if(gameBoard.getXO(i,j) != ''){
+                    document.querySelector(`#c${i}${j}`).classList.add(`${gameBoard.getXO(i, j)}`)
+                }
             }
         }
     }
-    return {playXO}
+    const resetGame = function(){
+        XO = 'X'
+        for(let i = 0; i < 3; i++){
+            for(let j = 0; j < 3; j++){
+                document.querySelector(`#c${i}${j}`).innerText = ''
+                if(gameBoard.getXO(i,j) != ''){
+                    document.querySelector(`#c${i}${j}`).classList.remove(`${gameBoard.getXO(i, j)}`)
+                }
+                gameBoard.setXOAt('',i, j)
+            }
+        }
+    }
+
+    return {playXO, resetGame}
 })();
 
 const Player =(name) =>{

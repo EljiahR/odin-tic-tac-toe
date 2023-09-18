@@ -11,6 +11,7 @@
     display:flex;
     justify-content: center;
     align-items: center;
+    flex-direction: column;
 }
 
 .board{
@@ -31,10 +32,10 @@
     align-items: center;
     font-size: 80px;
 }
-.x {
+.X {
     color:red
 }
 
-.o {
+.O {
     color:blue
 }
