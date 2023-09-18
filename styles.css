@@ -3,3 +3,26 @@
     margin: 0;
     padding: 0;
 }
+
+.container{
+    height:100%;
+    width:100%;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.board{
+    margin-top: 5%;
+    width:500px;
+    height: 500px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+    background-color: black;
+    gap:5px;
+}
+
+.cell{
+    background-color: white;
+}
