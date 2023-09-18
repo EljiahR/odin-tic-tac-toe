@@ -40,6 +40,9 @@
     align-items: center;
     font-size: 80px;
 }
+.cell:hover{
+    background-color: whitesmoke;
+}
 .X {
     color:red
 }
